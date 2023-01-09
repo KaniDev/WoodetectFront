@@ -20,6 +20,7 @@ export default function Nav() {
             Home
           </Navbar.Link>
           <Navbar.Link href="/about">About</Navbar.Link>
+          <Navbar.Link href="/sensors">Sensors</Navbar.Link>
           <Navbar.Link href="/login">Login</Navbar.Link>
           <Navbar.Link href="/signup">Sign Up</Navbar.Link>
         </Navbar.Collapse>

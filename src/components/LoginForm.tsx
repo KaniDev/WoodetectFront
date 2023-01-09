@@ -7,23 +7,31 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function sendLogin() {
+  async function sendLogin() {
+    console.log("Sending login request");
     var data = JSON.stringify({
-      email: email,
       password: password,
+      mail: email,
     });
-    axios
-      .post("http://82.64.198.124:3001/login", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then(() => {
+
+    var config = {
+      method: "post",
+      url: "http://82.64.198.124:8081/login",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+    console.log(data);
+    axios(config)
+      .then(function (response: { data: any }) {
+        // store the token in browser storage
+        localStorage.setItem("token", response.data.token);
+        // redirect to the dashboard
         window.location.href = "/";
       })
-      .catch((error) => {
+      .catch(function (error: any) {
         console.log(error);
-        window.location.href = "/login?error=true";
       });
   }
 
@@ -105,25 +113,24 @@ export default function LoginForm() {
             </Link>
           </div>
         </div>
-
-        <div>
-          <button
-            type="submit"
-            className={
-              "relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-green-500 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 focus:ring-opacity-60" +
-              (email !== "" && password !== "" ? "" : "cursor-not-allowed")
-            }
-          >
-            <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-              <LockClosedIcon
-                className="h-5 w-5 text-green-600 group-hover:text-green-200"
-                aria-hidden="true"
-              />
-            </span>
-            Sign in
-          </button>
-        </div>
       </form>
+      <div>
+        <button
+          onClick={() => sendLogin()}
+          className={
+            "relative w-full mt-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-green-500 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 focus:ring-opacity-60" +
+            (email !== "" && password !== "" ? "" : "cursor-not-allowed")
+          }
+        >
+          <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+            <LockClosedIcon
+              className="h-5 w-5 text-green-600 group-hover:text-green-200"
+              aria-hidden="true"
+            />
+          </span>
+          Sign in
+        </button>
+      </div>
     </div>
   );
 }
