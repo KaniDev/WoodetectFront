@@ -1,6 +1,12 @@
 import React from "react";
 
-const SensorCard = ({ sensorName, status, lastActive }) => {
+interface SensorCardProps {
+  sensorName: string;
+  status: string;
+  lastActive: string;
+}
+
+const SensorCard = ({ sensorName, status, lastActive }: SensorCardProps) => {
   const statusDotColor = status === "active" ? "bg-green-500" : "bg-red-500";
   return (
     <div className="relative rounded-lg">

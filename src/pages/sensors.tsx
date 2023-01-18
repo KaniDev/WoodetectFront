@@ -40,7 +40,7 @@ export default function SensorPage() {
               <AlertCard
                 alertName="Connection Issues"
                 alertText="Unstable connection leads to inaccurate data"
-                severityColor="bg-orange-500"
+                severityColor="orange"
               ></AlertCard>
             </Tab.Panel>
           </Tab.Panels>
